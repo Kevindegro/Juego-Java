@@ -1,0 +1,113 @@
+package suicidarme_juego;
+
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+import javax.swing.JFrame;
+
+import graphics.Assets;
+
+public class window extends JFrame implements Runnable {
+	public static final int WIDTH = 800, HEIGHT = 600;
+	private Canvas canvas;
+	private Thread thread;
+	private boolean running;
+	//--------------------
+	private BufferStrategy bs;
+	private Graphics g;
+	//----------------------------
+	private final int FPS = 60;
+	private double TARGETTIME = 1/1000000000;
+	private double DELTA = 0;
+	private int AVERAGEFPS = FPS;
+	
+	public window() {
+		setTitle("LoopingGames");
+		setSize(WIDTH, HEIGHT);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
+		setLocationRelativeTo(null);
+		setVisible(true);
+		
+		canvas = new Canvas();
+		
+		canvas.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		canvas.setMaximumSize(new Dimension(WIDTH, HEIGHT));
+		canvas.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+		canvas.setFocusable(true);
+	
+		add(canvas);
+		
+		
+	}
+	
+	
+	
+	public static void main(String[] args) {
+		new window().start();
+	}
+	
+private void update() {}
+private void draw() {
+    bs = canvas.getBufferStrategy();
+    if (bs == null) {
+        canvas.createBufferStrategy(3);
+        return;
+    }
+    g = bs.getDrawGraphics();
+    g.setColor(Color.BLACK);
+    g.fillRect(0, 0, WIDTH, HEIGHT);
+    g.drawImage(Assets.pantalla, 0, 0, WIDTH, HEIGHT, null);
+    g.drawString("" + AVERAGEFPS, 10, 20);
+    
+    g.dispose();
+    bs.show();
+}
+
+private void init() {
+	Assets.init();
+}
+
+@Override
+public void run() {
+	long now = 0;
+	long lastTime = System.nanoTime();
+	int frames = 0;
+	long time = 0;
+	init();
+	while(running) {
+		now = System.nanoTime();
+		DELTA += (now - lastTime) / TARGETTIME;
+		time += (now - lastTime);
+		lastTime = now;
+		if(DELTA >= 1) {
+			update();
+			draw();
+			DELTA --;
+			frames++;
+			System.out.println(frames);
+		}
+		if(time >= 1000000000) {
+			AVERAGEFPS = frames;
+			frames = 0;
+		}
+	}
+	stop();
+	
+}
+
+private void start() {
+	thread = new Thread(this);
+	thread.start();
+	running = true;
+}
+private void stop() {
+	try {
+		thread.join();
+		running = false;
+	} catch (InterruptedException e) {
+		e.printStackTrace();
+		}
+} }
