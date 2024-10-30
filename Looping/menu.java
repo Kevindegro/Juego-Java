@@ -33,7 +33,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         btnControles.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Controles del juego...");
+                JOptionPane.showMessageDialog(null, "------------------{Teclado}------------------" + '\n' + "Tecla 1, 2, 3 y 4 cambiar de camara" + '\n'+ "------------------{Mouse}------------------" + '\n' + "M1 para seleccionar las partes");
             }
         });
 
