@@ -1,18 +1,77 @@
 package menu;
 
-import java.awt.event.KeyEvent;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class VentanaPrincipal extends javax.swing.JFrame {
 
     public VentanaPrincipal() {
         initComponents();
+        agregarBotonesConAnimacion();
+    }
+
+    private void agregarBotonesConAnimacion() {
+        JPanel panelBotones = new JPanel();
+        panelBotones.setPreferredSize(new Dimension(400, 100));
+        
+        JButton btnJugar = crearBoton("Jugar");
+        JButton btnControles = crearBoton("Controles");
+        JButton btnSalir = crearBoton("Salir");
+
+        btnJugar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null, "Iniciando juego...");
+            }
+        });
+
+        btnControles.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null, "Controles del juego...");
+            }
+        });
+
+        btnSalir.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+
+        panelBotones.add(btnJugar);
+        panelBotones.add(btnControles);
+        panelBotones.add(btnSalir);
+
+        this.add(panelBotones, java.awt.BorderLayout.SOUTH);
+        pack();
+    }
+
+    private JButton crearBoton(String texto) {
+        JButton boton = new JButton(texto);
+        boton.setPreferredSize(new Dimension(100, 40));
+
+        boton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                boton.setBackground(Color.GRAY);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                boton.setBackground(null);
+            }
+        });
+
+        return boton;
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
-
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemRegistro = new javax.swing.JMenuItem();
@@ -29,7 +88,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenu1.setOpaque(true);
 
         jMenuItemRegistro.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItemRegistro.setMnemonic(KeyEvent.VK_A);
         jMenuItemRegistro.setText("Registrarte...");
         jMenuItemRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -58,57 +116,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenu1.add(jMenuItemSalir);
 
         jMenuBar1.add(jMenu1);
-
         setJMenuBar(jMenuBar1);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 273, Short.MAX_VALUE)
-        );
-
         pack();
-    }                     
+    }
 
-    private void jMenuItemRegistroActionPerformed(java.awt.event.ActionEvent evt) {                                                  
-       // Método que responde al evento click sobre el JMenuItemRegistro
+    private void jMenuItemRegistroActionPerformed(java.awt.event.ActionEvent evt) {
         nombre = JOptionPane.showInputDialog(this, "Escribe tu nombre: ");
         jMenuItemSaludo.setEnabled(true);
-    }                                                 
+    }
 
-    private void jMenuItemSaludoActionPerformed(java.awt.event.ActionEvent evt) {                                                
-        // Método que responde al evento click sobre el JMenuItemSaludo
+    private void jMenuItemSaludoActionPerformed(java.awt.event.ActionEvent evt) {
         JOptionPane.showMessageDialog(this, "Hola " + nombre);
-    }                                               
+    }
 
-    private void jMenuItemSalirActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        // Método que responde al evento click sobre el JMenuItemSalir
+    private void jMenuItemSalirActionPerformed(java.awt.event.ActionEvent evt) {
         this.dispose();
-    }                                              
+    }
 
     public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new VentanaPrincipal().setVisible(true);
