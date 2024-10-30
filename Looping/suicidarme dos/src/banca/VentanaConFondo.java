@@ -12,7 +12,16 @@ public class VentanaConFondo extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private Imagen panelImagen;
+    private Imagen panelImagenDos;
+    private Imagen panelImagenTres;
+    private Imagen panelImagenCuatro;
+    
     private PuntoRojo puntoRojo;
+    private PuntoRojo_2 puntoRojo_2;
+    private PuntoRojo_3 puntoRojo_3;
+    private PuntoRojo_4 puntoRojo_4;
+    private PuntoRojo_5 puntoRojo_5;
+    private PuntoRojo_6 puntoRojo_6;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -32,7 +41,21 @@ public class VentanaConFondo extends JFrame {
         setBounds(200, 200, 600, 400);
 
         //crear el panel de imagen y establecer el borde
+        
+        //LA IMAGEN UNO
         panelImagen = new Imagen("pantallaUno.png");
+        panelImagen.setBorder(new EmptyBorder(5, 5, 5, 5));
+        
+        //LA IMAGEN DOS
+        panelImagen = new Imagen("pantallaDos.png");
+        panelImagen.setBorder(new EmptyBorder(5, 5, 5, 5));
+        
+        //LA IMAGEN TRES
+        panelImagen = new Imagen("pantallaTres.png");
+        panelImagen.setBorder(new EmptyBorder(5, 5, 5, 5));
+        
+        //LA IMAGEN CUATRO
+        panelImagen = new Imagen("pantallaCuatro.png");
         panelImagen.setBorder(new EmptyBorder(5, 5, 5, 5));
 
         setLayout(new BorderLayout());
@@ -49,7 +72,7 @@ public class VentanaConFondo extends JFrame {
                 switch (e.getKeyChar()) {
                     case '1':
                         panelImagen.setImagen("pantallaUno.png");
-                        puntoRojo.setVisible(true);  //punto rojo en la pantallaUno
+                        puntoRojo.setVisible(true);
                         break;
                     case '2':
                         panelImagen.setImagen("pantallaDos.png");
