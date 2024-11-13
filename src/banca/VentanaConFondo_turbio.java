@@ -29,7 +29,8 @@ public class VentanaConFondo_turbio extends JFrame {
         this.nombreJugador = nombreJugador;
 
         // Hacer que la ventana sea pantalla completa
-        setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximiza la ventana
+        //setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximiza la ventana
+        setBounds(400, 400, 800, 600);
         setUndecorated(true); // Elimina los bordes de la ventana, incluyendo los botones de cerrar, minimizar, maximizar
         
         setVisible(true); // Muestra la ventana
