@@ -1,10 +1,9 @@
+// clase que representa una ventana con fondo y funcionalidad adicional
 package banca;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -16,82 +15,78 @@ import javax.swing.Timer;
 public class VentanaConFondo_turbio extends JFrame {
 
     private static final long serialVersionUID = 1L;
+    // arreglo de paneles de imagen que representan diferentes fondos
     private Imagen[] panelImagenes = new Imagen[4];
-    private int imagenActual = 0;
-    private JPanel pantallaTextoProgresivo;
-    private String nombreJugador;
-    private Timer timerTexto;
-    private String textoCompleto;
-    private StringBuilder textoParcial = new StringBuilder();
-    private boolean textoCompletado = false;
+    private int imagenActual = 0; // indice de la imagen actualmente visible
+    private JPanel pantallaTextoProgresivo; // panel para mostrar texto progresivo
+    private String nombreJugador; // nombre del jugador
+    private Timer timerTexto; // temporizador para el texto progresivo
+    private String textoCompleto; // texto completo que se mostrara de forma progresiva
+    private StringBuilder textoParcial = new StringBuilder(); // texto que se ha mostrado hasta ahora
+    private boolean textoCompletado = false; // indica si el texto ha sido completamente mostrado
 
     public VentanaConFondo_turbio(String nombreJugador) {
         this.nombreJugador = nombreJugador;
 
-        // Hacer que la ventana sea pantalla completa
-        //setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximiza la ventana
+        // configurar la ventana
         setBounds(400, 400, 800, 600);
-        setUndecorated(true); // Elimina los bordes de la ventana, incluyendo los botones de cerrar, minimizar, maximizar
-        
-        setVisible(true); // Muestra la ventana
+        setUndecorated(true); // quitar bordes de la ventana
+        setVisible(true); // hacer visible la ventana
         this.setTitle("LoopingGame");
 
-        // Crear la segunda pantalla en negro con texto progresivo
+        // crear el panel para mostrar texto progresivo
         pantallaTextoProgresivo = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
+                // llenar el fondo de color negro
                 g.setColor(Color.BLACK);
                 g.fillRect(0, 0, getWidth(), getHeight());
+                // configurar el color y fuente del texto
                 g.setColor(Color.CYAN);
                 g.setFont(new Font("Arial", Font.PLAIN, 16));
                 
-                // Dibujar cada fragmento de texto progresivo
+                // dibujar cada linea del texto progresivo
                 int y = 80;
                 for (String fragmento : textoParcial.toString().split("\\+")) {
                     g.drawString(fragmento, 50, y);
                     y += 20;
                 }
                 
+                // si el texto esta completo, mostrar mensaje para continuar
                 if (textoCompletado) {
-                    g.setColor(Color.CYAN);
-                    g.drawString("Pulsa cualquier tecla para continuar...", 50, 350);
+                    g.drawString("pulsa cualquier tecla para continuar...", 50, 350);
                 }
             }
         };
         pantallaTextoProgresivo.setBackground(Color.BLACK);
         add(pantallaTextoProgresivo);
 
-        // Texto completo que debe mostrarse progresivamente
-        textoCompleto = "Nombre: " + nombreJugador + "+"
+        // definir el texto completo que se mostrara
+        textoCompleto = "nombre: " + nombreJugador + "+"
                 + "---------------------------------------+"
-                + "Pude encontrar todas las pistas que reunen el caso. . . Estas forman una pista la cual dice:+"
-                + "+"
-                + " ''No creas en todo lo que ves''. . . Esas palabras resonaron fuertemente en mi cabeza. +"
-                + "                             ¿Que significan?+"
-                + "+"
-                + "- Jun; Recibe una llamada de su padre -+"
-                + "+"
-                + "+"
-                + "- Hola, hijo. Llamabra para saber como ibas con el caso que actualmente estas investigando.+"
-                + "  Nuevas noticias?+"
-                + "+"
-                + "Nuevamente yo, de repente, empecé a sentir que mi cabeza daba miles de vueltas. . .+"
-                + "Mis parpados pesaban lo que parecian toneladas. Lentamente, mis ojos fueron+"
-                + "                              A simplemente oscuridad. . .+"		
+                + "pude encontrar todas las pistas que reunen el caso. estas forman una pista la cual dice:+"
+                + "'no creas en todo lo que ves'. esas palabras resonaron fuertemente en mi cabeza.+"
+                + "                             ¿que significan?+"
+                + "- jun; recibe una llamada de su padre -+"
+                + "- hola, hijo. llamaba para saber como ibas con el caso que actualmente estas investigando.+"
+                + "  nuevas noticias?+"
+                + "nuevamente yo, de repente, empecé a sentir que mi cabeza daba vueltas. mis parpados pesaban toneladas. lentamente, mis ojos fueron a la oscuridad.+"
                 + "---------------------------------------+";
 
-        // Configurar el timer para mostrar el texto progresivamente
+        // configurar temporizador para mostrar el texto progresivamente
         timerTexto = new Timer(50, new ActionListener() {
             private int index = 0;
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                // agregar caracter al texto parcial hasta completar el texto
                 if (index < textoCompleto.length()) {
                     textoParcial.append(textoCompleto.charAt(index));
                     index++;
                     repaint();
                 } else {
+                    // detener el temporizador y marcar texto como completado
                     timerTexto.stop();
                     textoCompletado = true;
                     repaint();
@@ -100,18 +95,18 @@ public class VentanaConFondo_turbio extends JFrame {
         });
         timerTexto.start();
 
-        // Configurar el listener de teclas para mostrar las imágenes
+        // configurar listener para manejar teclas presionadas
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (pantallaTextoProgresivo.isVisible() && textoCompletado) {
-                    // Ocultar pantalla de texto progresivo y mostrar imágenes
+                    // ocultar el texto progresivo y mostrar imagenes
                     pantallaTextoProgresivo.setVisible(false);
                     add(panelImagenes[imagenActual]);
                     revalidate();
                     repaint();
                 } else {
-                    // Cambia de imagen si se presiona una tecla específica
+                    // cambiar imagen segun la tecla presionada
                     switch (e.getKeyChar()) {
                         case '1':
                             cambiarImagen(0);
@@ -132,7 +127,7 @@ public class VentanaConFondo_turbio extends JFrame {
             }
         });
 
-        // Crear los paneles de imagen para las nuevas imágenes
+        // inicializar paneles con diferentes imagenes
         panelImagenes[0] = new Imagen("pantallaUno_turbio.png");
         panelImagenes[1] = new Imagen("pantallaDos_turbio.png");
         panelImagenes[2] = new Imagen("pantallaTres_turbio.png");
@@ -141,6 +136,7 @@ public class VentanaConFondo_turbio extends JFrame {
         setFocusable(true);
     }
 
+    // metodo para cambiar la imagen visible
     private void cambiarImagen(int indice) {
         remove(panelImagenes[imagenActual]);
         imagenActual = indice;
