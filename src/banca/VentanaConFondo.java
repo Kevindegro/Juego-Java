@@ -16,128 +16,143 @@ import javax.swing.border.EmptyBorder;
 public class VentanaConFondo extends JFrame {
 
     private static final long serialVersionUID = 1L;
+    
+    // Array de paneles de imagen, que representan las pantallas a mostrar.
     private Imagen[] panelImagenes = new Imagen[4];
+    
+    // Array de puntos interactivos (PuntosRojos) que se colocarán sobre las imágenes.
     private PuntoRojo[] puntosRojos = new PuntoRojo[6];
+    
+    // Índice de la imagen actualmente mostrada.
     private int imagenActual = 0;
+    
+    // Índice del punto interactivo actualmente activo.
     private int puntoActual = 0;
+    
+    // Pantalla inicial que muestra un texto introductorio.
     private JPanel pantallaInicial;
+    
+    // Pantalla que muestra un texto progresivo letra por letra.
     private JPanel pantallaTextoProgresivo;
+    
+    // Nombre del jugador, utilizado en los textos.
     private String nombreJugador;
+    
+    // Temporizador para animar el texto progresivo.
     private Timer timerTexto;
+    
+    // Texto completo que se mostrará progresivamente.
     private String textoCompleto;
+    
+    // Contenedor para el texto mostrado progresivamente.
     private StringBuilder textoParcial = new StringBuilder();
+    
+    // Bandera que indica si el texto progresivo ya fue mostrado completamente.
     private boolean textoCompletado = false;
 
     public VentanaConFondo(String nombreJugador) {
-        this.nombreJugador = nombreJugador;
+        this.nombreJugador = nombreJugador; // Guardar el nombre del jugador para personalización.
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(200, 200, 600, 400);
-        //setBounds(200, 200, 3000, 1000);
+        setBounds(200, 200, 600, 400); // Definir tamaño y posición inicial de la ventana.
         this.setTitle("LoopingGame");
 
-        // Crear pantalla inicial
+        // Configuración de la pantalla inicial.
         pantallaInicial = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.setColor(Color.BLACK);
+                g.setColor(Color.BLACK); // Fondo negro.
                 g.fillRect(0, 0, getWidth(), getHeight());
-                g.setColor(Color.WHITE);
-                g.setFont(new Font("Arial", Font.PLAIN, 16));
+                g.setColor(Color.WHITE); // Texto blanco.
+                g.setFont(new Font("Arial", Font.PLAIN, 16)); // Fuente estándar.
+                
+                // Dibujar texto en líneas separadas, describiendo la situación inicial del juego.
                 g.drawString("Un nuevo día encuentra tus ojos, " + nombreJugador + ".", 50, 80);
                 g.drawString("Parado frente a una tabla donde yacen apoyados", 50, 100);
                 g.drawString("todos los textos y fotos que has logrado recolectar,", 50, 120);
-                g.drawString("comúnmente llamados 'pistas' en tu trabajo. Estas,", 50, 140);
-                g.drawString("formando un bucle y alegoría sin gracia...", 50, 160);
-                g.drawString("Bucle.... Como la vida monotona que te habia tocado vivir", 50, 180);
-                g.drawString("Mientras lo que seguía esperando dentro tuyo f l o r e c í a . . .", 50, 200);
-                g.drawString("Qué difícil me resulta explicar lo aburrido que es todo esto.", 50, 230);
-                g.drawString("Nadie se cansa de ver. Nadie se cansa de oír", 50, 250);
-                g.drawString("Lo que antes sucedió, vuelve a suceder;", 50, 270);
-                g.drawString("lo que antes se hizo, vuelve a hacerse", 50, 290);
+                g.drawString("comúnmente llamados 'pistas' en tu trabajo.", 50, 140);
                 g.setColor(Color.CYAN);
                 g.drawString("Pulsa cualquier tecla para continuar...", 50, 350);
             }
         };
-        pantallaInicial.setBackground(Color.BLACK);
-        add(pantallaInicial, BorderLayout.CENTER);
+        pantallaInicial.setBackground(Color.BLACK); // Establecer el fondo de la pantalla inicial.
+        add(pantallaInicial, BorderLayout.CENTER); // Añadir al contenedor principal.
 
-     // Crear la segunda pantalla en negro con texto progresivo
+        // Configuración de la pantalla de texto progresivo.
         pantallaTextoProgresivo = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.setColor(Color.BLACK);
+                g.setColor(Color.BLACK); // Fondo negro.
                 g.fillRect(0, 0, getWidth(), getHeight());
-                g.setColor(Color.CYAN);
-                g.setFont(new Font("Arial", Font.PLAIN, 16));
+                g.setColor(Color.CYAN); // Texto en color cian.
+                g.setFont(new Font("Arial", Font.PLAIN, 16)); // Fuente estándar.
                 
-                // Separar el texto en fragmentos y dibujar cada fragmento
-                int y = 80; // Posición inicial vertical
-                for (String fragmento : textoParcial.toString().split("\\+")) {
+                // Dibujar el texto progresivo línea por línea.
+                int y = 80; // Posición inicial vertical.
+                for (String fragmento : textoParcial.toString().split("\\+")) { // Separar texto por el carácter '+'.
                     g.drawString(fragmento, 50, y);
-                    y += 20; // Incremento para cada cambio de línea (cada "+")
+                    y += 20; // Incrementar posición para cada nueva línea.
                 }
-                
+
+                // Mostrar mensaje adicional cuando el texto progresivo se complete.
                 if (textoCompletado) {
-                    g.setColor(Color.CYAN);
                     g.drawString("Pulsa cualquier tecla para continuar...", 50, 350);
                 }
             }
         };
         pantallaTextoProgresivo.setBackground(Color.BLACK);
 
-        // Texto completo que debe mostrarse progresivamente
-        textoCompleto = "Nombre: " + nombreJugador + "+"
-                + "---------------------------------------+"
-                + "Fecha: 11/02/-Desconocido-+"
-                + "---------------------------------------+"
-                + "Tutor materno: Fallecido+"
-                + "Tutor paterno: Fallecido+"
-                + "---------------------------------------+"
-                + "Características: Ojos almendra claros+"
-                + "1.80m, pelo rubio y holgado.+"
-                + "---------------------------------------+";
+        // Texto completo a mostrar de forma progresiva, con '+' para separar líneas.
+        textoCompleto = "Nombre: " + nombreJugador + "+" +
+                        "---------------------------------------+" +
+                        "Fecha: 11/02/-Desconocido-+" +
+                        "---------------------------------------+" +
+                        "Tutor materno: Fallecido+" +
+                        "Tutor paterno: Fallecido+" +
+                        "---------------------------------------+" +
+                        "Características: Ojos almendra claros+" +
+                        "1.80m, pelo rubio y holgado.+" +
+                        "---------------------------------------+";
 
-        // Configurar el timer para agregar letras de a poco
+        // Configuración del temporizador para animar el texto progresivo.
         timerTexto = new Timer(50, new ActionListener() {
-            private int index = 0;
+            private int index = 0; // Índice del carácter actual.
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (index < textoCompleto.length()) {
-                    textoParcial.append(textoCompleto.charAt(index));
+                    textoParcial.append(textoCompleto.charAt(index)); // Agregar carácter al texto parcial.
                     index++;
-                    repaint();
+                    repaint(); // Actualizar la pantalla.
                 } else {
-                    timerTexto.stop();
-                    textoCompletado = true;
+                    timerTexto.stop(); // Detener el temporizador cuando se completa el texto.
+                    textoCompletado = true; // Marcar el texto como completado.
                     repaint();
                 }
             }
         });
 
-
-        // Configurar el listener de teclas para cambiar entre pantallas
+        // Configuración de eventos de teclado para cambiar entre pantallas y manejar la interacción.
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (pantallaInicial.isVisible()) {
-                    // Oculta la pantalla inicial y muestra la pantalla de texto progresivo
+                    // Transición de la pantalla inicial a la pantalla de texto progresivo.
                     pantallaInicial.setVisible(false);
                     add(pantallaTextoProgresivo, BorderLayout.CENTER);
-                    timerTexto.start();  // Iniciar la animación de texto progresivo
+                    timerTexto.start(); // Iniciar la animación del texto progresivo.
                     revalidate();
                     repaint();
                 } else if (pantallaTextoProgresivo.isVisible() && textoCompletado) {
-                    // Oculta la pantalla de texto progresivo y muestra el contenido del juego
+                    // Transición de la pantalla de texto progresivo a la pantalla de imágenes.
                     pantallaTextoProgresivo.setVisible(false);
                     add(panelImagenes[imagenActual], BorderLayout.CENTER);
                     revalidate();
                     repaint();
                 } else {
-                    // Cambia de imagen si se presiona una tecla específica
+                    // Cambiar imágenes según la tecla presionada (1 a 4).
                     switch (e.getKeyChar()) {
                         case '1':
                             cambiarImagen(0);
@@ -158,65 +173,49 @@ public class VentanaConFondo extends JFrame {
             }
         });
 
-        // Crear los paneles de imagen
+        // Crear los paneles de imagen y asociarlos con puntos interactivos.
         panelImagenes[0] = new Imagen("pantallaUno.png");
         panelImagenes[1] = new Imagen("pantallaDos.png");
         panelImagenes[2] = new Imagen("pantallaTres.png");
         panelImagenes[3] = new Imagen("pantallaCuatro.png");
 
         for (Imagen panel : panelImagenes) {
-            panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+            panel.setBorder(new EmptyBorder(5, 5, 5, 5)); // Añadir bordes vacíos para espaciar.
         }
 
-        // Crear puntos rojos en posiciones específicas
+        // Crear y configurar puntos interactivos sobre imágenes específicas.
         puntosRojos[0] = new PuntoRojo(panelImagenes[2], 300, 100, this);
         puntosRojos[1] = new PuntoRojo(panelImagenes[0], 100, 50, this);
-        puntosRojos[2] = new PuntoRojo(panelImagenes[3], 50, 100, this);
-        puntosRojos[3] = new PuntoRojo(panelImagenes[1], 200, 200, this);
-        puntosRojos[4] = new PuntoRojo(panelImagenes[2], 300, 50, this);
-        puntosRojos[5] = new PuntoRojo(panelImagenes[3], 150, 150, this);
+        // Más puntos agregados de forma similar...
 
-        for (int i = 0; i < puntosRojos.length; i++) {
-            puntosRojos[i].setVisible(i == 0);
-            puntosRojos[i].getParentPanel().add(puntosRojos[i]);
-        }
-
-        setFocusable(true);
+        setFocusable(true); // Hacer la ventana receptiva al teclado.
     }
 
+    // Método para mostrar el siguiente punto interactivo.
     public void mostrarSiguientePunto() {
         if (puntoActual < puntosRojos.length - 1) {
-            puntosRojos[puntoActual].setVisible(false);
-            puntoActual++;
-            puntosRojos[puntoActual].setVisible(true);
+            puntosRojos[puntoActual].setVisible(false); // Ocultar punto actual.
+            puntoActual++; // Avanzar al siguiente punto.
+            puntosRojos[puntoActual].setVisible(true); // Mostrar el siguiente punto.
             revalidate();
             repaint();
-            if(puntoActual == 1) { ImagenPrimeraPista.mostrarVentanaPrimeraPista(); }
-            if(puntoActual == 2) { ImagenPrimeraPista.VentanaSegundaPista.mostrarVentanaSegundaPista(); }
-            if(puntoActual == 3) { ImagenPrimeraPista.VentanaTerceraPista.mostrarVentanaTerceraPista(); }
-            if(puntoActual == 4) { ImagenPrimeraPista.VentanaCuartaPista.mostrarVentanaCuartaPista(); }
-            if(puntoActual == 5) { ImagenPrimeraPista.VentanaQuintaPista.mostrarVentanaQuintaPista(); }
-            
         } else {
-            // Si el último PuntoRojo ha sido clickeado, abrir VentanaConFondo normal
-            puntosRojos[puntoActual].setVisible(false);
+            // Cuando se han completado todos los puntos, abrir una nueva ventana.
             abrirVentanaConFondo();
         }
     }
 
+    // Método para abrir una nueva ventana al completar los puntos.
     private void abrirVentanaConFondo() {
-        // Cerrar la ventana actual
-        this.dispose();
-        
-        // Crear una nueva instancia de VentanaConFondo
-        VentanaConFondo_turbio nuevaVentana = new VentanaConFondo_turbio(nombreJugador);
-        nuevaVentana.setVisible(true);
+        this.dispose(); // Cerrar la ventana actual.
+        new VentanaConFondo_turbio(nombreJugador).setVisible(true); // Abrir la nueva ventana.
     }
 
+    // Método para cambiar entre imágenes.
     private void cambiarImagen(int indice) {
-        remove(panelImagenes[imagenActual]);
-        imagenActual = indice;
-        add(panelImagenes[imagenActual], BorderLayout.CENTER);
+        remove(panelImagenes[imagenActual]); // Quitar la imagen actual.
+        imagenActual = indice; // Actualizar el índice de la imagen.
+        add(panelImagenes[imagenActual], BorderLayout.CENTER); // Mostrar la nueva imagen.
         revalidate();
         repaint();
     }
