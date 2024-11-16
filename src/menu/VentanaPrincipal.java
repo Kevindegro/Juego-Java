@@ -14,6 +14,14 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import java.io.File;
+import java.io.IOException;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 
 // clase principal que extiende JFrame
 public class VentanaPrincipal extends javax.swing.JFrame {
@@ -21,6 +29,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private int imagenActual = 0; // indice de la imagen que se muestra actualmente
     private Timer timer; // temporizador para cambiar las imagenes
     public String nombre; // variable para almacenar el nombre del usuario
+    private Clip clipMusica;  // Variable para el clip de música
 
     // constructor de la ventana principal
     public VentanaPrincipal() {
@@ -45,6 +54,30 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         timer.start(); // iniciar el temporizador
+        
+        iniciarMusicaFondo();  // Iniciar la música de fondo
+
+    }
+    
+    private void iniciarMusicaFondo() {
+        try {
+            File audioFile = new File(getClass().getResource("/resources/Menu_Music.wav").toURI());
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile);
+            clipMusica = AudioSystem.getClip();
+            clipMusica.open(audioInputStream);
+            clipMusica.loop(Clip.LOOP_CONTINUOUSLY); // Reproducir en bucle
+            clipMusica.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void detenerMusica() {
+        if (clipMusica != null && clipMusica.isRunning()) {
+            clipMusica.stop();
+            clipMusica.close();
+        }
     }
 
     // metodo para agregar botones con animacion
