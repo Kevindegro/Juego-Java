@@ -129,26 +129,25 @@ public class VentanaConFondo_turbio extends JFrame {
         panelImagenes[2] = new Imagen("pantallaTres_turbio.png");
         panelImagenes[3] = new Imagen("pantallaCuatro_turbio.png");
 
-        // Añadir el botón al panelImagenes[1] cuando se muestre esa imagen
-        JButton boton = new JButton("Click aquí");
-        boton.setBounds(130, 550, 120, 120); // Ubicación del botón (ajustar como necesites)
+     // Añadir el botón al panelImagenes[1] cuando se muestre esa imagen
+        JButton boton = new JButton(" ");
+        boton.setBounds(160, 450, 80, 200); // Ubicación del botón (ajustar como necesites)
         boton.setOpaque(false); // Elimina el fondo del botón
         boton.setContentAreaFilled(false); // Hace el botón completamente transparente
         boton.setBorderPainted(false); // Quita los bordes del botón
         boton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Aquí abrimos una nueva ventana con el mensaje "Ella es la psicóloga"
-                JFrame nuevaVentana = new JFrame("Información");
-                nuevaVentana.setSize(200, 150); // Tamaño de la ventana
-                nuevaVentana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Cierra solo esta ventana
-                nuevaVentana.setLocationRelativeTo(null); // Centra la ventana en la pantalla
+                // Mostrar una alerta
+                JOptionPane.showMessageDialog(
+                    VentanaConFondo_turbio.this, // Foco en la ventana principal
+                    "¡¡¡DESPIERTA!!!", 
+                    "Easter egg", 
+                    JOptionPane.INFORMATION_MESSAGE
+                );
 
-                JLabel mensaje = new JLabel("Ella es la psicóloga", JLabel.CENTER);
-                mensaje.setFont(new Font("Arial", Font.BOLD, 20));
-                nuevaVentana.add(mensaje); // Añadir el mensaje a la ventana
-
-                nuevaVentana.setVisible(true); // Mostrar la ventana
+                // Enfocar la ventana principal nuevamente después del diálogo
+                VentanaConFondo_turbio.this.requestFocusInWindow();
             }
         });
 
@@ -157,6 +156,97 @@ public class VentanaConFondo_turbio extends JFrame {
         panelImagenes[1].add(boton); // Añadimos el botón al panel de la imagen
         panelImagenes[1].revalidate();
         panelImagenes[1].repaint();
+
+
+        setFocusable(true);
+        
+        JButton boton0 = new JButton(" ");
+        boton.setBounds(160, 450, 80, 200); // Ubicación del botón (ajustar como necesites)
+        //boton.setOpaque(false); // Elimina el fondo del botón
+        //boton.setContentAreaFilled(false); // Hace el botón completamente transparente
+        //boton.setBorderPainted(false); // Quita los bordes del botón
+        boton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Mostrar una alerta
+                JOptionPane.showMessageDialog(
+                    VentanaConFondo_turbio.this, // Foco en la ventana principal
+                    "¡¡¡DESPIERTA!!!", 
+                    "Easter egg", 
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+
+                // Enfocar la ventana principal nuevamente después del diálogo
+                VentanaConFondo_turbio.this.requestFocusInWindow();
+            }
+        });
+
+        // Este método se llama cuando se cambia a la imagen 1
+        panelImagenes[0].setLayout(null); // Usamos un layout nulo para posicionar el botón
+        panelImagenes[0].add(boton); // Añadimos el botón al panel de la imagen
+        panelImagenes[0].revalidate();
+        panelImagenes[0].repaint();
+
+
+        setFocusable(true);
+        
+        JButton boton2 = new JButton(" ");
+        boton.setBounds(160, 450, 80, 200); // Ubicación del botón (ajustar como necesites)
+        //boton.setOpaque(false); // Elimina el fondo del botón
+        //boton.setContentAreaFilled(false); // Hace el botón completamente transparente
+        //boton.setBorderPainted(false); // Quita los bordes del botón
+        boton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Mostrar una alerta
+                JOptionPane.showMessageDialog(
+                    VentanaConFondo_turbio.this, // Foco en la ventana principal
+                    "¡¡¡DESPIERTA!!!", 
+                    "Easter egg", 
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+
+                // Enfocar la ventana principal nuevamente después del diálogo
+                VentanaConFondo_turbio.this.requestFocusInWindow();
+            }
+        });
+
+        // Este método se llama cuando se cambia a la imagen 1
+        panelImagenes[2].setLayout(null); // Usamos un layout nulo para posicionar el botón
+        panelImagenes[2].add(boton); // Añadimos el botón al panel de la imagen
+        panelImagenes[2].revalidate();
+        panelImagenes[2].repaint();
+
+
+        setFocusable(true);
+        
+        JButton boton3 = new JButton(" ");
+        boton.setBounds(160, 450, 80, 200); // Ubicación del botón (ajustar como necesites)
+        //boton.setOpaque(false); // Elimina el fondo del botón
+        //boton.setContentAreaFilled(false); // Hace el botón completamente transparente
+        //boton.setBorderPainted(false); // Quita los bordes del botón
+        boton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Mostrar una alerta
+                JOptionPane.showMessageDialog(
+                    VentanaConFondo_turbio.this, // Foco en la ventana principal
+                    "¡¡¡DESPIERTA!!!", 
+                    "Easter egg", 
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+
+                // Enfocar la ventana principal nuevamente después del diálogo
+                VentanaConFondo_turbio.this.requestFocusInWindow();
+            }
+        });
+
+        // Este método se llama cuando se cambia a la imagen 1
+        panelImagenes[3].setLayout(null); // Usamos un layout nulo para posicionar el botón
+        panelImagenes[3].add(boton); // Añadimos el botón al panel de la imagen
+        panelImagenes[3].revalidate();
+        panelImagenes[3].repaint();
+
 
         setFocusable(true);
     }

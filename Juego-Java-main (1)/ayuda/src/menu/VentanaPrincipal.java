@@ -26,6 +26,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 // clase principal que extiende JFrame
 public class VentanaPrincipal extends javax.swing.JFrame {
+	int num = 0;
     private Image[] fondos; // arreglo de imagenes para el fondo
     private int imagenActual = 0; // indice de la imagen que se muestra actualmente
     private Timer timer; // temporizador para cambiar las imagenes
@@ -222,7 +223,33 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     // metodo para manejar la opcion "saludo"
     private void jMenuItemSaludoActionPerformed(java.awt.event.ActionEvent evt) {
+    	if(num == 0 || num >= 7) {
         JOptionPane.showMessageDialog(this, "Hola " + nombre); // mostrar saludo con el nombre del usuario
+        num = num + 1;
+    }else if(num == 1) {
+    	JOptionPane.showMessageDialog(this, "El padre de " + nombre + " era su figura a seguir, ya que el lo crio solo cuando su madre los abandono.");
+    	num = num + 1;
+    }
+    else if(num == 2) {
+    	JOptionPane.showMessageDialog(this,  nombre + " lo admiraba mucho y queria ser un detective como el.");
+    	num = num + 1;
+    }
+    else if(num == 3) {
+    	JOptionPane.showMessageDialog(this, "El padre de " + nombre + " al saber el pensamiento de su hijo creo un juego sobre detectives con el que se pasaban horas jugandolo juntos.");
+    	num = num + 1;
+    }
+    else if(num == 4) {
+    	JOptionPane.showMessageDialog(this, "Todo era felicidad en la vida de " + nombre + ", hasta que en una persecusión con un asesino su padre perdio la vida a manos del criminal.");
+    	num = num + 1;
+    }
+    else if(num == 5) {
+    	JOptionPane.showMessageDialog(this, "Desde ese dia " + nombre + " le decia a todo el mundo que su padre estaba con vida. Que el podia verlo.");
+    	num = num + 1;
+    }
+    else if(num == 6) {
+    	JOptionPane.showMessageDialog(this, "Por esa y mas cosas que el decia 'ver', " + nombre + " estubo pasando de psicologo en psicologo, hasta que al fin sus 'viciones' pararon gracias a la ultima psicologa que tuvo a cargo, con la que sigue teniendo asistiendo para asegurarse de que esta curado");
+    	num = num + 1;
+    }
     }
 
     // metodo para manejar la opcion "salir"
